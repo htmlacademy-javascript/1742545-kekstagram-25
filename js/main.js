@@ -3,11 +3,11 @@ function randomNumber(from, to) {
     throw new Error('Ошибка, некорректные данные!');
   }
   return Math.floor(Math.random() * (to - from + 1) + from);
-};
+}
 
 function maxStringLength(str, maxLength) {
   return str.length <= maxLength;
-};
+}
 
-console.log(randomNumber(1, 10));
-console.log(maxStringLength('Hello World', 11));
+randomNumber(1, 10);
+maxStringLength('Hello World', 11);

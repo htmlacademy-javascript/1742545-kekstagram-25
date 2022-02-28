@@ -26,8 +26,8 @@ const descriptions = ['Море', 'Машина', 'Еда', 'Пальмы', 'П�
 let currentId = 0;
 
 function buildPhotoDescription() {
-	currentId++;
-	return {
+  currentId++;
+  return {
     id: currentId,
     message: Array.from({length: randomNumber(1,2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
     url: `photos/${currentId}.jpg`,

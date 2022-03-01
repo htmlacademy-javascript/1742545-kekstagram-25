@@ -24,17 +24,32 @@ const comments = [
 const names = ['Иван', 'Александр', 'Сергей', 'Алексей', 'Павел', 'Никита', 'Дмитрий', 'Ольга', 'Екатерина', 'Полина'];
 const descriptions = ['Море', 'Машина', 'Еда', 'Пальмы', 'Пляж'];
 let currentId = 0;
+let commentId = 100;
+
+function createComments() {
+  return [
+    {
+      id: ++commentId,
+      avatar: `img/avatar/${randomNumber(1, 6)}.svg`,
+      message: Array.from({length: randomNumber(1,2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
+      name: names[randomNumber(0, names.length - 1)],
+    },
+    {
+      id: ++commentId,
+      avatar: `img/avatar/${randomNumber(1, 6)}.svg`,
+      message: Array.from({length: randomNumber(1,2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
+      name: names[randomNumber(0, names.length - 1)],
+    }
+  ]
+}
 
 function buildPhotoDescription() {
-  currentId++;
   return {
-    id: currentId,
-    message: Array.from({length: randomNumber(1,2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
+    id: ++currentId,
     url: `photos/${currentId}.jpg`,
-    avatar: `img/avatar/${randomNumber(1, 6)}.svg`,
     likes: randomNumber(15, 200),
-    name: names[randomNumber(0, names.length - 1)],
     description: descriptions[randomNumber(0, descriptions.length -1)],
+    comments: createComments(),
   };
 }
 const photoContent = Array.from({length: 25}, buildPhotoDescription);

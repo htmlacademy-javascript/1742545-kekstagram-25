@@ -1,4 +1,4 @@
-import {randomNumber} from "./util.js";
+import {randomNumber} from './util.js';
 
 const comments = [
   'Всё отлично!',

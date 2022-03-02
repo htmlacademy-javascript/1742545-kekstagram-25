@@ -9,5 +9,7 @@ function maxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
+maxStringLength('Hello World', 11);
+
 export {randomNumber};
 

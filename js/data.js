@@ -42,8 +42,7 @@ function buildPhotoDescription() {
 }
 
 // eslint-disable-next-line
-const photoContent = () => Array.from({length: 25}, buildPhotoDescription);
+const photoContent = Array.from({length: 25}, buildPhotoDescription);
 
-export {createComments};
-export {photoContent};
+export {createComments, photoContent};
 

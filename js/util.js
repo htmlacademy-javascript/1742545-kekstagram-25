@@ -11,5 +11,5 @@ function maxStringLength(str, maxLength) {
 
 maxStringLength('Hello World', 11);
 
-export {randomNumber};
+export {randomNumber, maxStringLength};
 

@@ -1,4 +1,4 @@
-import { photoContent } from "./data.js";
+import { photoContent } from './data.js';
 
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureTemplateElement = pictureTemplate.querySelector('a');

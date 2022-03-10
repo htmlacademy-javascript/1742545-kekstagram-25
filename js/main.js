@@ -1,2 +1,3 @@
-// eslint-disable-next-line
-import {createComments, photoContent} from './data.js';
+import './data.js';
+import './util.js';
+import './thumbnail.js';

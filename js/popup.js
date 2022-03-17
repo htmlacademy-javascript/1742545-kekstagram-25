@@ -36,9 +36,7 @@ export function showBigPicture(photo) {
   function onModalClose() {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    document.removeEventListener('keyup', (evt) => {
-      onEscapeClick(evt);
-    });
+    document.removeEventListener('keyup', onEscapeClick);
     bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', onModalClose);
   }
 
@@ -49,9 +47,7 @@ export function showBigPicture(photo) {
     }
   }
 
-  document.addEventListener('keyup', (evt) => {
-    onEscapeClick(evt);
-  });
+  document.addEventListener('keyup', onEscapeClick);
 
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', onModalClose);
 }

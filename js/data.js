@@ -16,7 +16,7 @@ let commentId = 100;
 function createComments() {
   return {
     id: ++commentId,
-    avatar: `img/avatar/${randomNumber(1, 6)}.svg`,
+    avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
     message: Array.from({length: randomNumber(1, 2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
     name: names[randomNumber(0, names.length - 1)],
   };

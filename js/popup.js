@@ -14,7 +14,7 @@ export function showBigPicture(photo) {
 
   socialComments.innerHTML = '';
 
-  photo.comments.forEach(comment => {
+  photo.comments.forEach((comment) => {
     const commentItem = document.createElement('li');
     commentItem.classList.add('social__comment');
     const commentImg = document.createElement('img');
@@ -36,7 +36,7 @@ export function showBigPicture(photo) {
   function onModalClose() {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    document.removeEventListener('keyup', function(evt) {
+    document.removeEventListener('keyup', (evt) => {
       onEscapeClick(evt);
     });
     bigPicture.querySelector('.big-picture__cancel').removeEventListener('click', onModalClose);
@@ -49,12 +49,9 @@ export function showBigPicture(photo) {
     }
   }
 
-  document.addEventListener('keyup', function(evt) {
+  document.addEventListener('keyup', (evt) => {
     onEscapeClick(evt);
   });
 
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', onModalClose);
 }
-
-
-

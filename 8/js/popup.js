@@ -2,7 +2,7 @@ const bigPicture = document.querySelector('.big-picture');
 const socialComments = document.querySelector('.social__comments');
 const fragment = document.createDocumentFragment();
 
-export function showBigPicture(photo) {
+function showBigPicture(photo) {
   document.body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   bigPicture.querySelector('.big-picture__img img').src = photo.url;
@@ -51,3 +51,5 @@ export function showBigPicture(photo) {
 
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', onModalClose);
 }
+
+export {showBigPicture};

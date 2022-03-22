@@ -5,11 +5,9 @@ function getRandomNumber(from, to) {
   return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
-function maxStringLength(str, maxLength) {
+function getMaxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
-maxStringLength('Hello World', 11);
-
-export {getRandomNumber, maxStringLength};
+export {getRandomNumber, getMaxStringLength};
 

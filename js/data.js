@@ -1,4 +1,4 @@
-import {randomNumber} from './util.js';
+import {getRandomNumber} from './util.js';
 
 const comments = [
   'Всё отлично!',
@@ -16,9 +16,9 @@ let commentId = 100;
 function createComments() {
   return {
     id: ++commentId,
-    avatar: `img/avatar-${randomNumber(1, 6)}.svg`,
-    message: Array.from({length: randomNumber(1, 2)}, () => comments[randomNumber(0, comments.length - 1)]).join(' '),
-    name: names[randomNumber(0, names.length - 1)],
+    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
+    message: Array.from({length: getRandomNumber(1, 2)}, () => comments[getRandomNumber(0, comments.length - 1)]).join(' '),
+    name: names[getRandomNumber(0, names.length - 1)],
   };
 }
 
@@ -26,9 +26,9 @@ function buildPhotoDescription() {
   return {
     id: ++currentId,
     url: `photos/${currentId}.jpg`,
-    likes: randomNumber(15, 200),
-    description: descriptions[randomNumber(0, descriptions.length -1)],
-    comments: Array.from({length: randomNumber(0, 15)}, createComments),
+    likes: getRandomNumber(15, 200),
+    description: descriptions[getRandomNumber(0, descriptions.length -1)],
+    comments: Array.from({length: getRandomNumber(0, 15)}, createComments),
   };
 }
 

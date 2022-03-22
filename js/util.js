@@ -1,4 +1,4 @@
-function randomNumber(from, to) {
+function getRandomNumber(from, to) {
   if (from < 0 || to < 0 || to <= from) {
     throw new Error('Ошибка, некорректные данные!');
   }
@@ -11,5 +11,5 @@ function maxStringLength(str, maxLength) {
 
 maxStringLength('Hello World', 11);
 
-export {randomNumber, maxStringLength};
+export {getRandomNumber, maxStringLength};
 

@@ -41,7 +41,7 @@ function validateHashtag (currentHashtag) {
   else if (!re.test(currentHashtag)) {
     hashtagElement.setCustomValidity('Хэш-тег начинается с символа #, не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д., максимальная длина одного хэш-тега 20 символов, включая решётку.');
   }
-};
+}
 
 function  onUploadForm () {
   const hashtags = hashtagElement.value.trim();
@@ -72,8 +72,8 @@ function  onUploadForm () {
       hashtagElement.setCustomValidity(`Хэш-тегов не должно быть больше, чем  ${MAX_HASHTAG_NUMBERS}`);
     }
   }
-};
+}
 
 function cleanUploadFile() {
   uploadFile.value = '';
-};
+}

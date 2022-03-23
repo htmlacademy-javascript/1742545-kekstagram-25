@@ -52,4 +52,4 @@ function showBigPicture(photo) {
   bigPicture.querySelector('.big-picture__cancel').addEventListener('click', onModalClose);
 }
 
-export {showBigPicture};
+export { showBigPicture };

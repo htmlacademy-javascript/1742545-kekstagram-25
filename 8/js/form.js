@@ -27,7 +27,7 @@ function onModalClose() {
 }
 
 function onEscapeClick(evt) {
-  if (evt.key === 'Escape' && isNotFocused(comment) && isNotFocused(hashtagElement)) {
+  if (evt.key === 'Escape' && isFocused(comment) && isFocused(hashtagElement)) {
     evt.preventDefault();
     onModalClose();
   }
@@ -37,7 +37,7 @@ function onUploadForm() {
   validateHashtags(hashtagElement);
 }
 
-function isNotFocused(element) {
+function isFocused(element) {
   return element !== document.activeElement;
 }
 

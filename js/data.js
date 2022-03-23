@@ -1,4 +1,4 @@
-import {getRandomNumber} from './util.js';
+import { getRandomNumber } from './util.js';
 
 const comments = [
   'Всё отлично!',
@@ -34,4 +34,4 @@ function buildPhotoDescription() {
 
 const photoContent = Array.from({length: 25}, buildPhotoDescription);
 
-export {photoContent};
+export { photoContent };

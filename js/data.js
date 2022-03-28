@@ -28,7 +28,7 @@ function buildPhotoDescription() {
     url: `photos/${currentId}.jpg`,
     likes: getRandomNumber(15, 200),
     description: descriptions[getRandomNumber(0, descriptions.length -1)],
-    comments: Array.from({length: getRandomNumber(0, 15)}, createComments),
+    comments: Array.from({length: getRandomNumber(0, 20)}, createComments),
   };
 }
 

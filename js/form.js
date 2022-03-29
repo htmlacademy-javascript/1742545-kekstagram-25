@@ -18,20 +18,20 @@ const sliderBlockNone = document.querySelector('.img-upload__effect-level');
 const ulEffects = document.querySelector('.effects__list');
 
 function reduceSizeImg () {
-  const numberValue = parseInt(scaleValue.value);
-  if (parseInt(scaleValue.value) > 25) {
-  scaleValue.value = `${numberValue - 25}%`
+  const numberValue = parseInt(scaleValue.value, 10);
+  if (parseInt(scaleValue.value, 10) > 25) {
+    scaleValue.value = `${numberValue - 25}%`;
 
-  imgPreview.style = `transform: scale(${(numberValue - 25) / 100})`;
+    imgPreview.style = `transform: scale(${(numberValue - 25) / 100})`;
   }
 }
 
 function increaseSizeImg() {
-  const numberValue = parseInt(scaleValue.value);
-  if (parseInt(scaleValue.value) < 100) {
-  scaleValue.value = `${numberValue + 25}%`
+  const numberValue = parseInt(scaleValue.value, 10);
+  if (parseInt(scaleValue.value, 10) < 100) {
+    scaleValue.value = `${numberValue + 25}%`;
 
-  imgPreview.style = `transform: scale(${(numberValue + 25) / 100})`;
+    imgPreview.style = `transform: scale(${(numberValue + 25) / 100})`;
   }
 }
 
@@ -42,8 +42,8 @@ effectInputs.forEach((effectInput) => {
   effectInput.addEventListener('change', (evt) => {
     imgPreview.classList.remove(...imgPreview.classList);
     imgPreview.classList.add(`effects__preview--${evt.target.value}`);
-  })
-})
+  });
+});
 
 valueElement.value = 100;
 
@@ -66,7 +66,7 @@ noUiSlider.create(sliderElement, {
       return parseFloat(value);
     },
   },
-})
+});
 
 let filterName = 'effects__preview--none';
 
@@ -143,7 +143,7 @@ ulEffects.addEventListener('change', (evt) => {
   } else {
     sliderElement.noUiSlider.updateOptions(settings[evt.target.value]);
   }
-})
+});
 
 function openModalForm(evt) {
   uploadOverlay.classList.remove('hidden');

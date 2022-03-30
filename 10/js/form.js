@@ -1,5 +1,10 @@
 import { validateHashtags } from './validate.js';
 
+const MAX_VALUE_EFFECT = 100;
+const MIN_SIZE_IMG = 25;
+const MAX_SIZE_IMG = 100;
+const SIZE_STEP_DEFAULT = 25;
+
 const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -8,6 +13,7 @@ const hashtagElement = document.querySelector('.text__hashtags');
 const formUploadElement = document.querySelector('#upload-select-image');
 const comment = document.querySelector('.text__description');
 
+const form = document.querySelector('.img-upload__form');
 const scaleSmaller = document.querySelector('.scale__control--smaller');
 const scaleBigger = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
@@ -17,77 +23,7 @@ const valueElement = document.querySelector('.effect-level__value');
 const sliderBlockNone = document.querySelector('.img-upload__effect-level');
 const ulEffects = document.querySelector('.effects__list');
 
-function reduceSizeImg () {
-  const numberValue = parseInt(scaleValue.value, 10);
-  if (parseInt(scaleValue.value, 10) > 25) {
-    scaleValue.value = `${numberValue - 25}%`;
-
-    imgPreview.style = `transform: scale(${(numberValue - 25) / 100})`;
-  }
-}
-
-function increaseSizeImg() {
-  const numberValue = parseInt(scaleValue.value, 10);
-  if (parseInt(scaleValue.value, 10) < 100) {
-    scaleValue.value = `${numberValue + 25}%`;
-
-    imgPreview.style = `transform: scale(${(numberValue + 25) / 100})`;
-  }
-}
-
-scaleSmaller.addEventListener('click', reduceSizeImg);
-scaleBigger.addEventListener('click', increaseSizeImg);
-
-effectInputs.forEach((effectInput) => {
-  effectInput.addEventListener('change', (evt) => {
-    imgPreview.classList.remove(...imgPreview.classList);
-    imgPreview.classList.add(`effects__preview--${evt.target.value}`);
-  });
-});
-
-valueElement.value = 100;
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
-});
-
-let filterName = 'effects__preview--none';
-
-sliderElement.noUiSlider.on('update', () => {
-  valueElement.value = sliderElement.noUiSlider.get();
-  if (filterName === 'effects__preview--chrome') {
-    imgPreview.style.filter = `grayscale(${valueElement.value})`;
-  } else if (filterName === 'effects__preview--sepia') {
-    imgPreview.style.filter = `sepia(${valueElement.value})`;
-  } else if (filterName === 'effects__preview--marvin') {
-    imgPreview.style.filter = `invert(${valueElement.value}%)`;
-  } else if (filterName === 'effects__preview--phobos') {
-    imgPreview.style.filter = `blur(${valueElement.value}px)`;
-  } else if (filterName === 'effects__preview--heat') {
-    imgPreview.style.filter = `brightness(${valueElement.value})`;
-  }
-});
-
-sliderBlockNone.style.display = 'none';
-
-const settings = {
+const settingsFilters = {
   chrome: {
     range: {
       min: 0,
@@ -130,6 +66,72 @@ const settings = {
   }
 };
 
+function changeScaleImg (operation) {
+  const numberValue = parseInt(scaleValue.value, 10);
+  if (numberValue > MIN_SIZE_IMG && operation === 'reduce') {
+    scaleValue.value = `${numberValue - SIZE_STEP_DEFAULT}%`;
+
+    imgPreview.style = `transform: scale(${(numberValue - SIZE_STEP_DEFAULT) / 100})`;
+  } else if (numberValue < MAX_SIZE_IMG && operation === 'increase') {
+    scaleValue.value = `${numberValue + SIZE_STEP_DEFAULT}%`;
+
+    imgPreview.style = `transform: scale(${(numberValue + SIZE_STEP_DEFAULT) / 100})`;
+  }
+}
+
+scaleSmaller.addEventListener('click', () => {
+  changeScaleImg('reduce');
+});
+scaleBigger.addEventListener('click', () => {
+  changeScaleImg('increase');
+});
+
+effectInputs.forEach((effectInput) => {
+  effectInput.addEventListener('change', (evt) => {
+    imgPreview.classList.remove(...imgPreview.classList);
+    imgPreview.classList.add(`effects__preview--${evt.target.value}`);
+  });
+});
+
+valueElement.value = MAX_VALUE_EFFECT;
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 100,
+  step: 1,
+  connect: 'lower',
+  format: {
+    to(value) {
+      return (Number.isInteger(value)) ? value.toFixed(0) : value.toFixed(1);
+    },
+    from(value) {
+      return parseFloat(value);
+    },
+  },
+});
+
+let filterName = 'effects__preview--none';
+
+sliderElement.noUiSlider.on('update', () => {
+  valueElement.value = sliderElement.noUiSlider.get();
+  if (filterName === 'effects__preview--chrome') {
+    imgPreview.style.filter = `grayscale(${valueElement.value})`;
+  } else if (filterName === 'effects__preview--sepia') {
+    imgPreview.style.filter = `sepia(${valueElement.value})`;
+  } else if (filterName === 'effects__preview--marvin') {
+    imgPreview.style.filter = `invert(${valueElement.value}%)`;
+  } else if (filterName === 'effects__preview--phobos') {
+    imgPreview.style.filter = `blur(${valueElement.value}px)`;
+  } else if (filterName === 'effects__preview--heat') {
+    imgPreview.style.filter = `brightness(${valueElement.value})`;
+  }
+});
+
+sliderBlockNone.style.display = 'none';
+
 ulEffects.addEventListener('change', (evt) => {
   filterName = `effects__preview--${evt.target.value}`;
   imgPreview.className = filterName;
@@ -141,7 +143,7 @@ ulEffects.addEventListener('change', (evt) => {
     sliderBlockNone.style.display = 'none';
     imgPreview.style.filter = 'none';
   } else {
-    sliderElement.noUiSlider.updateOptions(settings[evt.target.value]);
+    sliderElement.noUiSlider.updateOptions(settingsFilters[evt.target.value]);
   }
 });
 
@@ -168,7 +170,6 @@ function onEscapeClick(evt) {
   if (evt.key === 'Escape' && isFocused(comment) && isFocused(hashtagElement)) {
     evt.preventDefault();
     onModalClose();
-
   }
 }
 
@@ -184,8 +185,8 @@ function cleanUploadForm() {
   uploadFile.value = '';
   hashtagElement.value = '';
   comment.value = '';
-  scaleValue.value = 100;
   imgPreview.style = '';
   imgPreview.style.filter = 'none';
   sliderBlockNone.style.display = 'none';
+  form.reset();
 }

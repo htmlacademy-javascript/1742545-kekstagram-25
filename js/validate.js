@@ -2,6 +2,9 @@ const HASHTAG_REGEXP = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
 
 function validateHashtags(hashtagElement) {
+  if (!hashtagElement) {
+    return;
+  }
   const hashtags = hashtagElement.value.trim();
   hashtagElement.setCustomValidity('');
 

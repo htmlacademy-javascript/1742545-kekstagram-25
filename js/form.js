@@ -190,3 +190,19 @@ function cleanUploadForm() {
   sliderBlockNone.style.display = 'none';
   form.reset();
 }
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(form);
+  console.log(formData);
+  fetch(
+    'https://25.javascript.pages.academy/kekstagram',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    },
+  );
+})

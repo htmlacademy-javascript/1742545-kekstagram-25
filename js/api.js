@@ -12,7 +12,7 @@ function sendData(data, onSuccess, onFail) {
   )
     .then((response) => {
       if (response.ok) {
-        onSuccess(response.json());
+        onSuccess();
       } else {
         onFail();
       }

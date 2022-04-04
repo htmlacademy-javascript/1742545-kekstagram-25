@@ -265,7 +265,7 @@ function handleSubmit(evt) {
 
   sendData(
     formData,
-    (json) => {
+    () => {
       onModalClose();
       unBlockSubmitButton();
       showUploadSuccessSection();

@@ -222,7 +222,7 @@ function showUploadSuccessSection() {
 
     uploadSuccessButton.removeEventListener('click', closeUploadSuccessSection);
     successSection.removeEventListener('click', closeUploadSuccessSection);
-  };
+  }
   uploadSuccessButton.addEventListener('click', closeUploadSuccessSection);
 
   function onEscape(evt) {
@@ -230,7 +230,7 @@ function showUploadSuccessSection() {
       evt.preventDefault();
       closeUploadSuccessSection();
     }
-  };
+  }
   document.addEventListener('keyup', onEscape);
   successSection.addEventListener('click', closeUploadSuccessSection);
 }
@@ -245,7 +245,7 @@ function showUploadErrorSection() {
 
     uploadErrorButton.removeEventListener('click', closeUploadErrorSection);
     errorSection.removeEventListener('click', closeUploadErrorSection);
-  };
+  }
   uploadErrorButton.addEventListener('click', closeUploadErrorSection);
 
   function onEscape(evt) {
@@ -253,7 +253,7 @@ function showUploadErrorSection() {
       evt.preventDefault();
       closeUploadErrorSection();
     }
-  };
+  }
   document.addEventListener('keyup', onEscape);
   errorSection.addEventListener('click', closeUploadErrorSection);
 }

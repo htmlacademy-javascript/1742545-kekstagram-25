@@ -216,7 +216,7 @@ function showUploadSuccessSection() {
   document.body.appendChild(uploadSuccessElement);
   const successSection = document.querySelector('.success');
 
-  const closeUploadSuccessSection = () => {
+  function closeUploadSuccessSection() {
     document.body.removeChild(uploadSuccessElement);
     document.removeEventListener('keyup', onEscape);
 
@@ -225,7 +225,7 @@ function showUploadSuccessSection() {
   };
   uploadSuccessButton.addEventListener('click', closeUploadSuccessSection);
 
-  const onEscape = (evt) => {
+  function onEscape(evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       closeUploadSuccessSection();
@@ -239,7 +239,7 @@ function showUploadErrorSection() {
   document.body.appendChild(uploadErrorElement);
   const errorSection = document.querySelector('.error');
 
-  const closeUploadErrorSection = () => {
+  function closeUploadErrorSection() {
     document.body.removeChild(uploadErrorElement);
     document.removeEventListener('keyup', onEscape);
 
@@ -248,7 +248,7 @@ function showUploadErrorSection() {
   };
   uploadErrorButton.addEventListener('click', closeUploadErrorSection);
 
-  const onEscape = (evt) => {
+  function onEscape(evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       closeUploadErrorSection();

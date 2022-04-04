@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       picturesWrapper.appendChild(fragment);
     })
-    .catch((error) => {
+    .catch(() => {
       showAlert('Не удалось загрузить данные!');
     });
-})
+});

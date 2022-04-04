@@ -5,12 +5,14 @@ function validateHashtags(hashtagElement) {
   if (!hashtagElement) {
     return;
   }
-  const hashtags = hashtagElement.value.trim();
+
   hashtagElement.setCustomValidity('');
+  const hashtags = hashtagElement.value.trim();
 
   if (hashtags.length === 0) {
     return;
   }
+
   const arrayOfHashtags = hashtags.split(' ');
 
   const unique = {};

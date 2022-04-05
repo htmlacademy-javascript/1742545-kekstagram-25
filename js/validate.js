@@ -2,12 +2,17 @@ const HASHTAG_REGEXP = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
 
 function validateHashtags(hashtagElement) {
-  const hashtags = hashtagElement.value.trim();
+  if (!hashtagElement) {
+    return;
+  }
+
   hashtagElement.setCustomValidity('');
+  const hashtags = hashtagElement.value.trim();
 
   if (hashtags.length === 0) {
     return;
   }
+
   const arrayOfHashtags = hashtags.split(' ');
 
   const unique = {};

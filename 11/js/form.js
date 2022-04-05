@@ -202,16 +202,17 @@ function cleanUploadForm() {
   form.reset();
 }
 
-function blockSubmitButton() {
-  uploadSubmit.disabled = true;
-  uploadSubmit.textContent = 'Публикую...';
+function toggleSubmitButtonState(value) {
+  if (value === 'blockSubmitButton') {
+    uploadSubmit.disabled = true;
+    uploadSubmit.textContent = 'Публикую...';
+  } else if (value === 'unBlockSubmitButton') {
+    uploadSubmit.disabled = false;
+    uploadSubmit.textContent = 'Опубликовать';
+  }
 }
 
-function unBlockSubmitButton() {
-  uploadSubmit.disabled = false;
-  uploadSubmit.textContent = 'Опубликовать';
-}
-
+// TODO оптимизировать функции по DRY
 function showUploadSuccessSection() {
   document.body.appendChild(uploadSuccessElement);
   const successSection = document.querySelector('.success');
@@ -231,10 +232,12 @@ function showUploadSuccessSection() {
       closeUploadSuccessSection();
     }
   }
+
   document.addEventListener('keyup', onEscape);
   successSection.addEventListener('click', closeUploadSuccessSection);
 }
 
+// TODO оптимизировать функции по DRY
 function showUploadErrorSection() {
   document.body.appendChild(uploadErrorElement);
   const errorSection = document.querySelector('.error');
@@ -260,19 +263,19 @@ function showUploadErrorSection() {
 
 function handleSubmit(evt) {
   evt.preventDefault();
-  blockSubmitButton();
+  toggleSubmitButtonState('blockSubmitButton');
   const formData = new FormData(form);
 
   sendData(
     formData,
     () => {
       onModalClose();
-      unBlockSubmitButton();
+      toggleSubmitButtonState('unBlockSubmitButton');
       showUploadSuccessSection();
     },
     () => {
       onModalClose();
-      unBlockSubmitButton();
+      toggleSubmitButtonState('unBlockSubmitButton');
       showUploadErrorSection();
     }
   );

@@ -11,7 +11,7 @@ function isValidMaxStringLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
-const showAlert = (message, showTime = ALERT_SHOW_TIME) => {
+function showAlert (message, showTime = ALERT_SHOW_TIME) {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -30,6 +30,6 @@ const showAlert = (message, showTime = ALERT_SHOW_TIME) => {
   setTimeout(() => {
     alertContainer.remove();
   }, showTime);
-};
+}
 
 export { getRandomNumber, isValidMaxStringLength, showAlert };

@@ -1,7 +1,3 @@
-function getPhotoContent(url) {
-  return fetch(url);
-}
-
 function sendData(data, onSuccess, onFail) {
   fetch(
     'https://25.javascript.pages.academy/kekstagram',
@@ -10,17 +6,10 @@ function sendData(data, onSuccess, onFail) {
       body: data,
     },
   )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        onFail();
-      }
-    })
+    .then((response) => (response.ok) ? onSuccess() : onFail())
     .catch(() => {
       onFail();
     });
 }
 
-
-export { getPhotoContent, sendData };
+export { sendData };

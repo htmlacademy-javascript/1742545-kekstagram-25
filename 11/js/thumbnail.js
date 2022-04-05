@@ -1,6 +1,4 @@
-// import { photoContent } from './data.js';
 import { showBigPicture } from './popup.js';
-import { getPhotoContent } from './api.js';
 import { showAlert } from './util.js';
 
 const pictureTemplate = document.querySelector('#picture').content;
@@ -9,7 +7,7 @@ const fragment = document.createDocumentFragment();
 const picturesWrapper = document.querySelector('.pictures');
 
 document.addEventListener('DOMContentLoaded', () => {
-  getPhotoContent('https://25.javascript.pages.academy/kekstagram/data')
+  fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
         return response.json();

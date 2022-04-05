@@ -275,7 +275,7 @@ function handleSubmit(evt) {
     },
     () => {
       onModalClose();
-      toggleSubmitButtonState('unBlockSubmitButton');;
+      toggleSubmitButtonState('unBlockSubmitButton');
       showUploadErrorSection();
     }
   );

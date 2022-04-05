@@ -7,7 +7,7 @@ function sendData(data, onSuccess, onFail) {
     },
   )
     .then((response) => {
-      return (response.ok) ? onSuccess() : onFail();
+      (response.ok) ? onSuccess() : onFail();
     })
     .catch(() => {
       onFail();

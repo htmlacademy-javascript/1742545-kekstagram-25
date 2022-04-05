@@ -30,6 +30,6 @@ function showAlert (message, showTime = ALERT_SHOW_TIME) {
   setTimeout(() => {
     alertContainer.remove();
   }, showTime);
-};
+}
 
 export { getRandomNumber, isValidMaxStringLength, showAlert };

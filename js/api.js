@@ -6,8 +6,8 @@ function sendData(data, onSuccess, onFail) {
       body: data,
     },
   )
-    .then((response) => {
-      (response.ok) ? onSuccess() : onFail();
+    .then(response => {
+      return (response.ok) ? onSuccess() : onFail();
     })
     .catch(() => {
       onFail();

@@ -1,4 +1,5 @@
 import { validateHashtags } from './validate.js';
+import { sendData } from './api.js';
 
 const MAX_VALUE_EFFECT = 100;
 const MIN_SIZE_IMG = 25;
@@ -22,6 +23,14 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const sliderBlockNone = document.querySelector('.img-upload__effect-level');
 const ulEffects = document.querySelector('.effects__list');
+
+const uploadSubmit = document.querySelector('.img-upload__submit');
+const uploadSuccessTemplate = document.querySelector('#success').content;
+const uploadSuccessElement = uploadSuccessTemplate.querySelector('section');
+const uploadSuccessButton = uploadSuccessElement.querySelector('.success__button');
+const uploadErrorTemplate = document.querySelector('#error').content;
+const uploadErrorElement = uploadErrorTemplate.querySelector('section');
+const uploadErrorButton = uploadErrorElement.querySelector('.error__button');
 
 const settingsFilters = {
   chrome: {
@@ -153,6 +162,7 @@ function openModalForm(evt) {
   imgPreview.src = window.URL.createObjectURL(evt.currentTarget.files[0]);
   uploadCancel.addEventListener('click', onModalClose);
   document.addEventListener('keyup', onEscapeClick);
+  setUserFormSubmit();
 }
 
 uploadFile.addEventListener('change', openModalForm);
@@ -164,6 +174,7 @@ function onModalClose() {
   document.removeEventListener('keyup', onEscapeClick);
   uploadCancel.removeEventListener('click', onModalClose);
   cleanUploadForm();
+  form.removeEventListener('submit', handleSubmit);
 }
 
 function onEscapeClick(evt) {
@@ -191,18 +202,82 @@ function cleanUploadForm() {
   form.reset();
 }
 
-form.addEventListener('submit', (evt) => {
+function blockSubmitButton() {
+  uploadSubmit.disabled = true;
+  uploadSubmit.textContent = 'Публикую...';
+}
+
+function unBlockSubmitButton() {
+  uploadSubmit.disabled = false;
+  uploadSubmit.textContent = 'Опубликовать';
+}
+
+function showUploadSuccessSection() {
+  document.body.appendChild(uploadSuccessElement);
+  const successSection = document.querySelector('.success');
+
+  function closeUploadSuccessSection() {
+    document.body.removeChild(uploadSuccessElement);
+    document.removeEventListener('keyup', onEscape);
+
+    uploadSuccessButton.removeEventListener('click', closeUploadSuccessSection);
+    successSection.removeEventListener('click', closeUploadSuccessSection);
+  }
+  uploadSuccessButton.addEventListener('click', closeUploadSuccessSection);
+
+  function onEscape(evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeUploadSuccessSection();
+    }
+  }
+  document.addEventListener('keyup', onEscape);
+  successSection.addEventListener('click', closeUploadSuccessSection);
+}
+
+function showUploadErrorSection() {
+  document.body.appendChild(uploadErrorElement);
+  const errorSection = document.querySelector('.error');
+
+  function closeUploadErrorSection() {
+    document.body.removeChild(uploadErrorElement);
+    document.removeEventListener('keyup', onEscape);
+
+    uploadErrorButton.removeEventListener('click', closeUploadErrorSection);
+    errorSection.removeEventListener('click', closeUploadErrorSection);
+  }
+  uploadErrorButton.addEventListener('click', closeUploadErrorSection);
+
+  function onEscape(evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeUploadErrorSection();
+    }
+  }
+  document.addEventListener('keyup', onEscape);
+  errorSection.addEventListener('click', closeUploadErrorSection);
+}
+
+function handleSubmit(evt) {
   evt.preventDefault();
+  blockSubmitButton();
   const formData = new FormData(form);
-  console.log(formData);
-  fetch(
-    'https://25.javascript.pages.academy/kekstagram',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: formData,
+
+  sendData(
+    formData,
+    () => {
+      onModalClose();
+      unBlockSubmitButton();
+      showUploadSuccessSection();
     },
+    () => {
+      onModalClose();
+      unBlockSubmitButton();
+      showUploadErrorSection();
+    }
   );
-})
+}
+
+function setUserFormSubmit() {
+  form.addEventListener('submit', handleSubmit);
+}

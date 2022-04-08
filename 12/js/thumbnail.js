@@ -3,15 +3,18 @@ import { showAlert } from './util.js';
 import { getRandomNumber } from './util.js';
 import { debounce } from './util.js';
 
+const FILTER_CHANGE_DEBOUNCE_TIME = 500;
+
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureTemplateElement = pictureTemplate.querySelector('a');
 const fragment = document.createDocumentFragment();
 const picturesWrapper = document.querySelector('.pictures');
 
 const imgFilters = document.querySelector('.img-filters');
-const filterDefaultButton = document.querySelector('#filter-default');
-const filterRandomButton = document.querySelector('#filter-random');
-const filterDiscussedButton = document.querySelector('#filter-discussed');
+const imgFiltersForm = document.querySelector('.img-filters__form');
+const filterDefaultButton = imgFiltersForm.querySelector('#filter-default');
+const filterRandomButton = imgFiltersForm.querySelector('#filter-random');
+const filterDiscussedButton = imgFiltersForm.querySelector('#filter-discussed');
 let uploadedPhotos;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -95,12 +98,12 @@ function handleFilterChange(filterName) {
 
 filterDefaultButton.addEventListener('click', debounce(() => {
   handleFilterChange('filterDefaultButton');
-}, 500));
+}, FILTER_CHANGE_DEBOUNCE_TIME));
 
 filterRandomButton.addEventListener('click', debounce(() => {
   handleFilterChange('filterRandomButton');
-}, 500));
+}, FILTER_CHANGE_DEBOUNCE_TIME));
 
 filterDiscussedButton.addEventListener('click', debounce(() => {
   handleFilterChange('filterDiscussedButton');
-}, 500));
+}, FILTER_CHANGE_DEBOUNCE_TIME));

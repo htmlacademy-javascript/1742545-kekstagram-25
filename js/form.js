@@ -124,6 +124,7 @@ noUiSlider.create(sliderElement, {
 
 let filterName = 'effects__preview--none';
 
+// TODO switch
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
   if (filterName === 'effects__preview--chrome') {

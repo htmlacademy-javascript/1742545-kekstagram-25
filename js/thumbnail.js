@@ -50,7 +50,7 @@ function removePhotoContent() {
   const pictures = picturesWrapper.querySelectorAll('.picture');
   pictures.forEach((picture) => {
     picture.remove();
-  })
+  });
 }
 
 function handleFilterChange(filterName) {

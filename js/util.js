@@ -32,4 +32,13 @@ function showAlert (message, showTime = ALERT_SHOW_TIME) {
   }, showTime);
 }
 
-export { getRandomNumber, isValidMaxStringLength, showAlert };
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomNumber, isValidMaxStringLength, showAlert, debounce };

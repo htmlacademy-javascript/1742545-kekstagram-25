@@ -124,19 +124,25 @@ noUiSlider.create(sliderElement, {
 
 let filterName = 'effects__preview--none';
 
-// TODO switch
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
-  if (filterName === 'effects__preview--chrome') {
-    imgPreview.style.filter = `grayscale(${valueElement.value})`;
-  } else if (filterName === 'effects__preview--sepia') {
-    imgPreview.style.filter = `sepia(${valueElement.value})`;
-  } else if (filterName === 'effects__preview--marvin') {
-    imgPreview.style.filter = `invert(${valueElement.value}%)`;
-  } else if (filterName === 'effects__preview--phobos') {
-    imgPreview.style.filter = `blur(${valueElement.value}px)`;
-  } else if (filterName === 'effects__preview--heat') {
-    imgPreview.style.filter = `brightness(${valueElement.value})`;
+
+  switch (filterName) {
+    case 'effects__preview--chrome':
+      imgPreview.style.filter = `grayscale(${valueElement.value})`;
+      break;
+    case 'effects__preview--sepia':
+      imgPreview.style.filter = `sepia(${valueElement.value})`;
+      break;
+    case 'effects__preview--marvin':
+      imgPreview.style.filter = `invert(${valueElement.value}%)`;
+      break;
+    case 'effects__preview--phobos':
+      imgPreview.style.filter = `blur(${valueElement.value}px)`;
+      break;
+    case 'effects__preview--heat':
+      imgPreview.style.filter = `brightness(${valueElement.value})`;
+      break;
   }
 });
 
@@ -163,7 +169,7 @@ function openModalForm(evt) {
   imgPreview.src = window.URL.createObjectURL(evt.currentTarget.files[0]);
   uploadCancel.addEventListener('click', onModalClose);
   document.addEventListener('keyup', onEscapeClick);
-  setUserFormSubmit();
+  form.addEventListener('submit', handleSubmit);
 }
 
 uploadFile.addEventListener('change', openModalForm);
@@ -225,6 +231,7 @@ function showUploadSuccessSection() {
     uploadSuccessButton.removeEventListener('click', closeUploadSuccessSection);
     successSection.removeEventListener('click', closeUploadSuccessSection);
   }
+
   uploadSuccessButton.addEventListener('click', closeUploadSuccessSection);
 
   function onEscape(evt) {
@@ -280,8 +287,4 @@ function handleSubmit(evt) {
       showUploadErrorSection();
     }
   );
-}
-
-function setUserFormSubmit() {
-  form.addEventListener('submit', handleSubmit);
 }

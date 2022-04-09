@@ -15,7 +15,7 @@ function validateHashtags(hashtagElement) {
 
   const arrayOfHashtags = hashtags.split(' ');
 
-  const unique = {};
+  const uniqueHastags = {};
 
   for (let i = 0; i < arrayOfHashtags.length; i++) {
     if (arrayOfHashtags[i] === '') {
@@ -23,7 +23,7 @@ function validateHashtags(hashtagElement) {
     } else {
       validateHashtagFormat(arrayOfHashtags[i], hashtagElement);
 
-      validateHastagUniqueness(unique, arrayOfHashtags[i].toLowerCase(), hashtagElement);
+      validateHastagUniqueness(uniqueHastags, arrayOfHashtags[i].toLowerCase(), hashtagElement);
     }
   }
 
@@ -38,9 +38,9 @@ function validateHashtagFormat(currentHashtag, hashtagElement) {
   }
 }
 
-function validateHastagUniqueness(unique, hashtag, hashtagElement) {
-  if (unique[hashtag] !== 1) {
-    unique[hashtag] = 1;
+function validateHastagUniqueness(uniqueHastags, hashtag, hashtagElement) {
+  if (uniqueHastags[hashtag] !== 1) {
+    uniqueHastags[hashtag] = 1;
   } else {
     hashtagElement.setCustomValidity('#ХэшТег и #хэштег считаются одним и тем же тегом, теги не должны повторяться.');
   }

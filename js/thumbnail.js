@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     () => {
       showAlert('Не удалось загрузить данные!');
     }
-  )
+  );
 });
 
 function buildPhotoContent(photoContent) {

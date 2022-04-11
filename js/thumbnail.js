@@ -1,10 +1,9 @@
 import { showBigPicture } from './popup.js';
-import { showAlert } from './util.js';
+import { showAlert, getRandomNumber, debounce } from './util.js';
 import { getData } from './api.js';
-import { getRandomNumber } from './util.js';
-import { debounce } from './util.js';
 
 const FILTER_CHANGE_DEBOUNCE_TIME = 500;
+const MAX_RANDOM_PHOTOS = 10;
 
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureTemplateElement = pictureTemplate.querySelector('a');
@@ -79,8 +78,8 @@ function showRandom() {
   const randomPhotos = [];
   const usedIndexes = [];
 
-  while(randomPhotos.length < 10) {
-    const index = getRandomNumber(0, 9);
+  while(randomPhotos.length < MAX_RANDOM_PHOTOS) {
+    const index = getRandomNumber(0, MAX_RANDOM_PHOTOS - 1);
     if(!usedIndexes.includes(index)) {
       usedIndexes.push(index);
       randomPhotos.push(uploadedPhotos[index]);

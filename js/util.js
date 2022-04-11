@@ -7,6 +7,10 @@ function getRandomNumber(from, to) {
   return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
+function isFocused(element) {
+  return element !== document.activeElement;
+}
+
 function showAlert(message, showTime = ALERT_SHOW_TIME) {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -37,4 +41,4 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandomNumber, showAlert, debounce };
+export { getRandomNumber, showAlert, isFocused, debounce };

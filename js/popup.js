@@ -6,9 +6,6 @@ const commentLoader = document.querySelector('.social__comments-loader');
 const fragment = document.createDocumentFragment();
 let currentCommentCount = DEFAULT_COMMENT_COUNT;
 
-
-
-
 // function checkCommentsCount(photo, currentCommentCount) {
 //   if (currentCommentCount >= photo.comments.length) {
 //     currentCommentCount = photo.comments.length;
@@ -65,7 +62,6 @@ function showBigPicture(photo) {
   bigPicture.querySelector('.social__caption').textContent = photo.description;
 
   printComments(photo.comments);
-
 
   // function onModalClose() {
   //   bigPicture.classList.add('hidden');

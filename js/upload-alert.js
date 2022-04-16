@@ -23,19 +23,4 @@ function showUploadSection(uploadElement, uploadSectionButton, sectionClass) {
   section.addEventListener('click', closeUploadSection);
 }
 
-// function onEscape(evt) {
-//   if (evt.key === 'Escape') {
-//     evt.preventDefault();
-//     closeUploadSection();
-//   }
-// }
-
-// function closeUploadSection(uploadElement, uploadSectionButton, section) {
-//   document.body.removeChild(uploadElement);
-//   document.removeEventListener('keyup', onEscape);
-
-//   uploadSectionButton.removeEventListener('click', closeUploadSection);
-//   section.removeEventListener('click', closeUploadSection);
-// }
-
 export { showUploadSection };

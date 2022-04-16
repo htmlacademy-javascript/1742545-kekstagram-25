@@ -1,8 +1,5 @@
 import { validateHashtags } from './validate.js';
 import { sendData } from './api.js';
-import { showUploadSection } from './upload-alert.js';
-import { settingsFilters } from './filters-config.js';
-import { isFocused } from './util.js';
 
 const MAX_VALUE_EFFECT = 100;
 const MIN_SIZE_IMG = 25;
@@ -18,15 +15,14 @@ const formUploadElement = document.querySelector('#upload-select-image');
 const comment = document.querySelector('.text__description');
 
 const form = document.querySelector('.img-upload__form');
-const scaleSmaller = form.querySelector('.scale__control--smaller');
-const scaleBigger = form.querySelector('.scale__control--bigger');
-const scaleValue = form.querySelector('.scale__control--value');
-const effectInputs = form.querySelectorAll('input[name="effect"]');
-const sliderElement = form.querySelector('.effect-level__slider');
-const valueElement = form.querySelector('.effect-level__value');
-const sliderBlockNone = form.querySelector('.img-upload__effect-level');
-const ulEffects = form.querySelector('.effects__list');
-let filterName = 'effects__preview--none';
+const scaleSmaller = document.querySelector('.scale__control--smaller');
+const scaleBigger = document.querySelector('.scale__control--bigger');
+const scaleValue = document.querySelector('.scale__control--value');
+const effectInputs = document.querySelectorAll('input[name="effect"]');
+const sliderElement = document.querySelector('.effect-level__slider');
+const valueElement = document.querySelector('.effect-level__value');
+const sliderBlockNone = document.querySelector('.img-upload__effect-level');
+const ulEffects = document.querySelector('.effects__list');
 
 const uploadSubmit = document.querySelector('.img-upload__submit');
 const uploadSuccessTemplate = document.querySelector('#success').content;
@@ -35,6 +31,49 @@ const uploadSuccessButton = uploadSuccessElement.querySelector('.success__button
 const uploadErrorTemplate = document.querySelector('#error').content;
 const uploadErrorElement = uploadErrorTemplate.querySelector('section');
 const uploadErrorButton = uploadErrorElement.querySelector('.error__button');
+
+const settingsFilters = {
+  chrome: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    start: 1,
+  },
+  sepia: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    start: 1,
+  },
+  marvin: {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    step: 1,
+    start: 100,
+  },
+  phobos: {
+    range: {
+      min: 0,
+      max: 3,
+    },
+    step: 0.1,
+    start: 3,
+  },
+  heat: {
+    range: {
+      min: 1,
+      max: 3,
+    },
+    step: 0.1,
+    start: 3,
+  }
+};
 
 function changeScaleImg (operation) {
   const numberValue = parseInt(scaleValue.value, 10);
@@ -83,25 +122,21 @@ noUiSlider.create(sliderElement, {
   },
 });
 
+let filterName = 'effects__preview--none';
+
+// TODO switch
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
-
-  switch (filterName) {
-    case 'effects__preview--chrome':
-      imgPreview.style.filter = `grayscale(${valueElement.value})`;
-      break;
-    case 'effects__preview--sepia':
-      imgPreview.style.filter = `sepia(${valueElement.value})`;
-      break;
-    case 'effects__preview--marvin':
-      imgPreview.style.filter = `invert(${valueElement.value}%)`;
-      break;
-    case 'effects__preview--phobos':
-      imgPreview.style.filter = `blur(${valueElement.value}px)`;
-      break;
-    case 'effects__preview--heat':
-      imgPreview.style.filter = `brightness(${valueElement.value})`;
-      break;
+  if (filterName === 'effects__preview--chrome') {
+    imgPreview.style.filter = `grayscale(${valueElement.value})`;
+  } else if (filterName === 'effects__preview--sepia') {
+    imgPreview.style.filter = `sepia(${valueElement.value})`;
+  } else if (filterName === 'effects__preview--marvin') {
+    imgPreview.style.filter = `invert(${valueElement.value}%)`;
+  } else if (filterName === 'effects__preview--phobos') {
+    imgPreview.style.filter = `blur(${valueElement.value}px)`;
+  } else if (filterName === 'effects__preview--heat') {
+    imgPreview.style.filter = `brightness(${valueElement.value})`;
   }
 });
 
@@ -128,7 +163,7 @@ function openModalForm(evt) {
   imgPreview.src = window.URL.createObjectURL(evt.currentTarget.files[0]);
   uploadCancel.addEventListener('click', onModalClose);
   document.addEventListener('keyup', onEscapeClick);
-  form.addEventListener('submit', handleSubmit);
+  setUserFormSubmit();
 }
 
 uploadFile.addEventListener('change', openModalForm);
@@ -154,6 +189,10 @@ function onUploadForm() {
   validateHashtags(hashtagElement);
 }
 
+function isFocused(element) {
+  return element !== document.activeElement;
+}
+
 function cleanUploadForm() {
   uploadFile.value = '';
   hashtagElement.value = '';
@@ -164,27 +203,85 @@ function cleanUploadForm() {
   form.reset();
 }
 
-function setSubmitButtonState(isBlocked) {
-  uploadSubmit.disabled = isBlocked;
-  uploadSubmit.textContent = isBlocked ? 'Публикую...' : 'Опубликовать';
+function toggleSubmitButtonState(value) {
+  if (value === 'blockSubmitButton') {
+    uploadSubmit.disabled = true;
+    uploadSubmit.textContent = 'Публикую...';
+  } else if (value === 'unBlockSubmitButton') {
+    uploadSubmit.disabled = false;
+    uploadSubmit.textContent = 'Опубликовать';
+  }
+}
+
+// TODO оптимизировать функции по DRY
+function showUploadSuccessSection() {
+  document.body.appendChild(uploadSuccessElement);
+  const successSection = document.querySelector('.success');
+
+  function closeUploadSuccessSection() {
+    document.body.removeChild(uploadSuccessElement);
+    document.removeEventListener('keyup', onEscape);
+
+    uploadSuccessButton.removeEventListener('click', closeUploadSuccessSection);
+    successSection.removeEventListener('click', closeUploadSuccessSection);
+  }
+  uploadSuccessButton.addEventListener('click', closeUploadSuccessSection);
+
+  function onEscape(evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeUploadSuccessSection();
+    }
+  }
+
+  document.addEventListener('keyup', onEscape);
+  successSection.addEventListener('click', closeUploadSuccessSection);
+}
+
+// TODO оптимизировать функции по DRY
+function showUploadErrorSection() {
+  document.body.appendChild(uploadErrorElement);
+  const errorSection = document.querySelector('.error');
+
+  function closeUploadErrorSection() {
+    document.body.removeChild(uploadErrorElement);
+    document.removeEventListener('keyup', onEscape);
+
+    uploadErrorButton.removeEventListener('click', closeUploadErrorSection);
+    errorSection.removeEventListener('click', closeUploadErrorSection);
+  }
+  uploadErrorButton.addEventListener('click', closeUploadErrorSection);
+
+  function onEscape(evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeUploadErrorSection();
+    }
+  }
+  document.addEventListener('keyup', onEscape);
+  errorSection.addEventListener('click', closeUploadErrorSection);
 }
 
 function handleSubmit(evt) {
   evt.preventDefault();
-  setSubmitButtonState(true);
+  toggleSubmitButtonState('blockSubmitButton');
   const formData = new FormData(form);
 
   sendData(
     formData,
     () => {
       onModalClose();
-      setSubmitButtonState(false);
-      showUploadSection(uploadSuccessElement, uploadSuccessButton, '.success');
+      toggleSubmitButtonState('unBlockSubmitButton');
+      showUploadSuccessSection();
     },
     () => {
       onModalClose();
-      setSubmitButtonState(false);
-      showUploadSection(uploadErrorElement, uploadErrorButton, '.error');
+      toggleSubmitButtonState('unBlockSubmitButton');
+      showUploadErrorSection();
     }
   );
+}
+
+function setUserFormSubmit() {
+  form.addEventListener('submit', handleSubmit);
 }

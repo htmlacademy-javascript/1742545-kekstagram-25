@@ -7,11 +7,11 @@ function getRandomNumber(from, to) {
   return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
-function isFocused(element) {
-  return element !== document.activeElement;
+function isValidMaxStringLength(str, maxLength) {
+  return str.length <= maxLength;
 }
 
-function showAlert(message, showTime = ALERT_SHOW_TIME) {
+function showAlert (message, showTime = ALERT_SHOW_TIME) {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -32,7 +32,7 @@ function showAlert(message, showTime = ALERT_SHOW_TIME) {
   }, showTime);
 }
 
-function debounce(callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
 
   return (...rest) => {
@@ -41,4 +41,4 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-export { getRandomNumber, showAlert, isFocused, debounce };
+export { getRandomNumber, isValidMaxStringLength, showAlert, debounce };

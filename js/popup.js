@@ -53,7 +53,7 @@ function showBigPicture(photo) {
 
   uploadComment = function onLoadCommentClick() {
     onCommentLoaderClick(photo);
-  }
+  };
 
   commentLoader.addEventListener('click', uploadComment);
 
